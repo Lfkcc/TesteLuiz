@@ -1,0 +1,73 @@
+/******************************************************************************
+UNIVERSIDADE DO VALE DO ITAJAÍ - UNIVALI
+Escola Politécnica
+Disciplina: Introdução a Ciência da Computação
+Professor: Me. Michael Douglas C A
+
+Aluno: Luiz Felipe Kantovitz
+Trabalho M1: Verificar a consistência de um côdigo de barras.
+
+
+
+*******************************************************************************/
+#include <iostream>
+using namespace std;
+
+int main()
+{
+    
+    long long digitosbarra;
+    
+    cout << "Informe o valor dos 13 digitos do codigo de barras: ";
+    cin >> digitosbarra;
+    
+    long long analise = digitosbarra;
+    int contador = 0;
+    
+        while (analise > 0) {
+            analise = analise / 10;
+            contador = contador + 1;
+        }
+        if (contador != 13) {
+            cout << "O codigo fornecido não possui 13 digitos";
+            return 0;
+        }
+    
+    int digitoverificador = digitosbarra % 10; // salva o dígito digitoverificador
+    digitosbarra = digitosbarra / 10; // Reduziu para 12 dígitos agora
+    
+    int somatorio = 0; // garantir que está limpa
+    int quadro = 12;
+    
+    while (quadro > 0) {
+        int digito = digitosbarra % 10;   // vai removendo um por um
+        if (quadro % 2 == 0) {   // para saber qual será multiplicado por 3 e qual por 1
+            somatorio = somatorio + digito * 3;   // ímpares
+                             }    
+            else {
+               somatorio = somatorio + digito;   // pares
+                 }
+            digitosbarra = digitosbarra / 10;
+            quadro = quadro - 1;
+                       }
+            
+            int divisao_somatorio = somatorio / 10;
+            divisao_somatorio = divisao_somatorio + 1;
+            int multiplicado = divisao_somatorio * 10;
+            int digito_resultado = multiplicado - somatorio; 
+                if (digito_resultado == 10) { // adiciona que se der 10 resulta a 0
+                    digito_resultado = 0;
+                }
+            
+            cout << "Digito verificador resultado foi: " << digito_resultado << "\n";
+            cout << "Digito verificador original é: " << digitoverificador << "\n";
+            
+            if (digito_resultado == digitoverificador) {
+                cout << "Codigo: Valido" << "\n";
+                }
+                else {
+                    cout << "Codigo: Invalido" << "\n";
+                }
+    
+    return 0;
+}
